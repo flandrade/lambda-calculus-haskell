@@ -1,30 +1,37 @@
 {-# LANGUAGE RankNTypes #-}
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 
+{-# HLINT ignore "Use const" #-}
+
 module ChurchEncoding.ChurchBoolean
-  ( churchFalse,
+  ( ChurchBoolean,
+    churchFalse,
     churchTrue,
     churchNeg,
     churchConj,
     churchDisj,
     boolChurch,
     boolUnchurch,
+    unpackBoolean,
   )
 where
 
-type ChurchBoolean = forall r. r -> r -> r
+newtype ChurchBoolean = ChurchBoolean (forall r. r -> r -> r)
+
+unpackBoolean :: ChurchBoolean -> r -> r -> r
+unpackBoolean (ChurchBoolean n) = n
 
 -- | false = λx.λy.y
 churchFalse :: ChurchBoolean
-churchFalse _ y = y
+churchFalse = ChurchBoolean $ \_ y -> y
 
 -- | true = λx.λy.x
 churchTrue :: ChurchBoolean
-churchTrue x _ = x
+churchTrue = ChurchBoolean $ \x _ -> x
 
 -- | conditional = λp.λx.λy.p x y
 churchCond :: ChurchBoolean -> ChurchBoolean -> ChurchBoolean -> ChurchBoolean
-churchCond predicate = predicate
+churchCond (ChurchBoolean predicate) = predicate
 
 -- | neg = λx.churchCond λx false true
 churchNeg :: ChurchBoolean -> ChurchBoolean
@@ -39,9 +46,9 @@ churchDisj :: ChurchBoolean -> ChurchBoolean -> ChurchBoolean
 churchDisj x = churchCond x churchTrue
 
 -- | Convert Church Boolean to boolean
-boolUnchurch :: (Bool -> Bool -> a) -> a
-boolUnchurch = (\a b c -> c a b) True False
+boolUnchurch :: ChurchBoolean -> Bool
+boolUnchurch (ChurchBoolean b) = b True False
 
--- | Convert boolean to
+-- | Convert boolean to Church Boolean
 boolChurch :: Bool -> ChurchBoolean
 boolChurch b = if b then churchTrue else churchFalse
