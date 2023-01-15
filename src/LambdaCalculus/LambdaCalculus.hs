@@ -77,10 +77,6 @@ freshName s = head $ filter (\x -> not (x `S.member` s)) $ map (\i -> "v" ++ sho
 
 -- Exercise 19. Based on the previous exercises, define a Haskell function that implements β-reduction
 -- (one step).
-betaReduction :: Term -> Term
-betaReduction (Application (Lambda v t) e) = substitute v e t
-betaReduction (Application (Application m n') n) = Application $ (betaReduction $ Application $ m n') n
+betaReduction :: LambdaTerm -> LambdaTerm
+betaReduction (Application (Lambda v t) e) = substitute t v e
 betaReduction x = x
-
--- Exercise 20. Based on the previous exercises, define a Haskell function that reduces a lambda LambdaTerm
--- into β-normal form when possible.
