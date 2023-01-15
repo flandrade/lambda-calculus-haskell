@@ -7,6 +7,13 @@
 {-# HLINT ignore "Avoid lambda" #-}
 {-# HLINT ignore "Redundant lambda" #-}
 
+-- |
+-- | Author      :  Fernanda Lucia Andrade Guanoquiza
+-- | Date        :  2023-01-16
+-- |
+-- | Church Numerals (see ChurchNumeralSpec to check the solutions of exercises 7, 8, 10, 11, 12)
+-- | Exercise 15. Analogously to the previous exercise, define Haskell functions to convert between Haskell
+-- | and Church natural numbers, and check the correctness of your solutions to exercises 7, 8, 10, 11 and 12
 module ChurchEncoding.ChurchNumeral
   ( numChurch,
     numUnchurch,

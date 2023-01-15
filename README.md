@@ -1,4 +1,21 @@
-# Lambda calculus with Church encodings
+# Lambda Calculus with Church Encodings
+
+An attempt to implement lambda calculus and church encodings with Haskell
+
+# Lambda Calculus
+
+There are three kinds of expressions (also called terms) in the pure lambda calculus:
+
+- $x$: variable
+- $\lambda x. M$: abstraction
+- $e_1$ $e_2$: applications
+
+Notes:
+
+- A term is closed if it has no free variables; otherwise it is open.
+- Beta-reduction is defined by: $(\lambda x. e_1) e_2 \rightarrow e_1[e_2/x]$
+
+# Church Encodings
 
 Church encoding is a means of representing data and operators in the lambda calculus. Data structures
 in this repository:
@@ -8,6 +25,12 @@ in this repository:
 - Pairs
 
 ## Run
+
+Install dependencies:
+
+```
+cabal install
+```
 
 Run the tests:
 

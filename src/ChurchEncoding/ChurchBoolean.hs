@@ -3,6 +3,14 @@
 
 {-# HLINT ignore "Use const" #-}
 
+-- |
+-- | Author      :  Fernanda Lucia Andrade Guanoquiza
+-- | Date        :  2023-01-16
+-- |
+-- | Church Booleans (see ChurchBooleanSpec to check the solutions of exercise 6)
+-- | Exercise 14. Using Haskell, define functions boolChurch and boolUnchurch which translate Haskell
+-- | booleans into Church booleans and vice versa. Use them to check the correctness of your solutions to
+-- | exercise 6.
 module ChurchEncoding.ChurchBoolean
   ( ChurchBoolean,
     churchFalse,

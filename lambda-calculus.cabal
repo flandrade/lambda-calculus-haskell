@@ -51,6 +51,7 @@ library
     -- Modules exported by the library.
     exposed-modules:  ChurchEncoding.ChurchBoolean
                       ChurchEncoding.ChurchNumeral
+                      LambdaCalculus.LambdaCalculus
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -60,6 +61,7 @@ library
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.16.4.0,
+                      containers ==0.6.*,
 
     ghc-options: -Wall
 
@@ -89,7 +91,9 @@ test-suite lambda-calculus-test
     -- Test dependencies.
     build-depends:    base ^>=4.16.4.0,
                       hspec ==2.*,
+                      containers ==0.6.*,
                       lambda-calculus,
     other-modules:    ChurchEncoding.ChurchBooleanSpec
                       ChurchEncoding.ChurchNumeralSpec
+                      LambdaCalculus.LambdaCalculusSpec
     build-tool-depends: hspec-discover:hspec-discover == 2.*
