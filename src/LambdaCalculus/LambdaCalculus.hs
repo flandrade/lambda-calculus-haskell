@@ -1,5 +1,5 @@
 -- |
--- | Author      :  Fernanda Lucia Andrade Guanoquiza
+-- | Author      :  Fernanda Andrade
 -- | Date        :  2023-01-16
 -- |
 -- | Lambda Calculus (see LambdaCalculusSpec for tests)
@@ -51,23 +51,20 @@ substitute (Variable x) y sub = if x == y then sub else Variable x
 -- if the current term is an application, recursively perform substitution on both subterms
 substitute (Application t1 t2) y sub = Application (substitute t1 y sub) (substitute t2 y sub)
 -- if the current term is a lambda abstraction:
-substitute (Lambda x t1) y sub =
-  -- if the variable bound in this lambda abstraction is the variable to be replaced,
-  -- return the same lambda abstraction
-  if x == y
-    then Lambda x (substitute t1 y sub)
-    else -- otherwise, check if the bound variable is captured by the replacement term
-
-      if x `S.member` fvT2
-        then -- if it is, create a fresh variable with a new name and perform the substitution on the modified term
-
-          let x' = freshName (S.union fvT1 (S.union fvT2 (S.singleton x)))
-              t1' = substitute t1 x (Variable x')
-           in Lambda x' (substitute t1' y sub)
-        else -- otherwise, perform the substitution on the term as normal
-          Lambda x (substitute t1 y sub)
+substitute term@(Lambda x t1) y sub
+  -- if the variable bound in this lambda abstraction is the variable to be replaced, return the same term
+  | x == y && not isBounded = term
+  -- if the variable bound in this lambda abstraction is the variable to be replaced and the var is not captured,
+  -- perform the substitution
+  | isBounded && not isVarCaptured = Lambda x (substitute t1 y sub)
+  -- if the var is captured is, create a fresh variable with a new name and perform the substitution on the modified term
+  | otherwise =
+      let x' = freshName (S.union fvT1 (S.union fvT2 (S.singleton x)))
+          t1' = substitute t1 x (Variable x')
+       in Lambda x' (substitute t1' y sub)
   where
-    -- find the free variables in the current term and the replacement term
+    isBounded = x `S.member` fvT1
+    isVarCaptured = x `S.member` fvT2
     fvT1 = freeVariables t1
     fvT2 = freeVariables sub
 

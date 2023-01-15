@@ -28,11 +28,11 @@ spec = do
     it "replaces a variable in a complex term" $ do
       let t = Application (Lambda "x" (Variable "x")) (Variable "y")
       let e = Variable "z"
-      substitute t "y" e `shouldBe` (Application (Lambda "x" (Variable "x")) e)
+      substitute t "y" e `shouldBe` Application (Lambda "x" (Variable "x")) e
     it "avoids variable capture" $ do
       let t = Lambda "x" (Application (Variable "x") (Variable "y"))
       let e = Variable "x"
-      substitute t "y" e `shouldBe` (Lambda "v1" (Application (Variable "v1") (Variable "x")))
+      substitute t "y" e `shouldBe` Lambda "v1" (Application (Variable "v1") (Variable "x"))
 
   describe "betaReduction" $ do
     it "reduces a lambda term in an step" $ do

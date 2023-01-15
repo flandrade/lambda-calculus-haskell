@@ -4,7 +4,7 @@
 {-# HLINT ignore "Use const" #-}
 
 -- |
--- | Author      :  Fernanda Lucia Andrade Guanoquiza
+-- | Author      :  Fernanda Andrade
 -- | Date        :  2023-01-16
 -- |
 -- | Church Booleans (see ChurchBooleanSpec to check the solutions of exercise 6)
@@ -20,14 +20,10 @@ module ChurchEncoding.ChurchBoolean
     churchDisj,
     boolChurch,
     boolUnchurch,
-    unpackBoolean,
   )
 where
 
 newtype ChurchBoolean = ChurchBoolean (forall r. r -> r -> r)
-
-unpackBoolean :: ChurchBoolean -> r -> r -> r
-unpackBoolean (ChurchBoolean n) = n
 
 -- | false = λx.λy.y
 churchFalse :: ChurchBoolean

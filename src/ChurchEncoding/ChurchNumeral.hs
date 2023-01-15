@@ -8,7 +8,7 @@
 {-# HLINT ignore "Redundant lambda" #-}
 
 -- |
--- | Author      :  Fernanda Lucia Andrade Guanoquiza
+-- | Author      :  Fernanda Andrade
 -- | Date        :  2023-01-16
 -- |
 -- | Church Numerals (see ChurchNumeralSpec to check the solutions of exercises 7, 8, 10, 11, 12)
@@ -86,7 +86,7 @@ predecessor (ChurchNum n) = fist (n next initial)
     next p = pair (send p) (successor $ send p)
     initial = pair churchZero churchZero
 
--- | substraction = λn.λm.m predecessor n
+-- | subtraction = λn.λm.m predecessor n
 churchSub :: ChurchNum -> ChurchNum -> ChurchNum
 churchSub n (ChurchNum m) = m predecessor n
 
